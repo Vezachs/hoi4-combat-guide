@@ -1,4 +1,3 @@
-
 import numpy as np
 import math as math
 import matplotlib.pyplot as plt
@@ -140,13 +139,3 @@ ax.text(0.05, 0.4, textstr, transform=ax.transAxes, fontsize=10,
         verticalalignment='top', bbox=props)
 
 plt.show()
-
-# x = np.arange(max_divisions-1) + 1
-# y = np.delete(FinalAttack,max_divisions-1)
-# plt.plot(x,y)
-# plt.xlabel('Division Width')
-# plt.ylabel('Combat Strength')
-# ax.text(3, 8, 'boxed italics text in data coords', style='italic',
-#         bbox={'facecolor': 'red', 'alpha': 0.5, 'pad': 10})
-# plt.show()
-#
