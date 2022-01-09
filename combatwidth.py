@@ -1,3 +1,4 @@
+
 import numpy as np
 import math as math
 import matplotlib.pyplot as plt
@@ -5,21 +6,21 @@ import matplotlib.pyplot as plt
 #Enter the number of provinces for each type you want to simulate, e.g. 500
 #Forests, 250 Plains.
 
-Desert = 1
-Forest = 0
+Desert = 0
+Forest = 25
 Hills = 0
 Jungle = 0
-Marsh = 0
+Marsh = 11
 Mountain = 0
-Plains = 0
-Urban = 0
+Plains = 17
+Urban = 3
 
 #Next, enter the weights determining how often you attack from 1,2,3 or 4
 #sides. Example: 1,2,1,0.
 
 Attack1province = 1
-Attack2province = 0
-Attack3province = 0
+Attack2province = 2
+Attack3province = 1
 Attack4province = 0
 
 #Start of the code.
@@ -103,14 +104,14 @@ x = np.arange(max_divisions-1) + 1
 y = np.delete(FinalAttack,max_divisions-1)
 
 textstr = '\n'.join((
-'Desert: '+str(DesertRatio)+'%',
-'Forest: '+str(ForestRatio)+'%',
-'Hills: '+str(HillsRatio)+'%',
-'Jungle: '+str(JungleRatio)+'%',
-'Marsh: '+str(MarshRatio)+'%',
-'Mountain: '+str(MountainRatio)+'%',
-'Plains: '+str(PlainsRatio)+'%',
-'Urban: '+str(UrbanRatio)+'%' ))
+'Desert: '+str(round(DesertRatio))+'%',
+'Forest: '+str(round(ForestRatio))+'%',
+'Hills: '+str(round(HillsRatio))+'%',
+'Jungle: '+str(round(JungleRatio))+'%',
+'Marsh: '+str(round(MarshRatio))+'%',
+'Mountain: '+str(round(MountainRatio))+'%',
+'Plains: '+str(round(PlainsRatio))+'%',
+'Urban: '+str(round(UrbanRatio))+'%' ))
 
 plt.plot(x,y)
 plt.title('Combat Width simulator by /u/Vezachs')
