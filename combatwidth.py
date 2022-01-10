@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 #Forests, 250 Plains.
 
 Desert = 0
-Forest = 500
+Forest = 25
 Hills = 0
 Jungle = 0
-Marsh = 0
+Marsh = 11
 Mountain = 0
-Plains = 200
+Plains = 17
 Urban = 3
 
 #Next, enter the weights determining how often you attack from 1,2,3 or 4
@@ -25,7 +25,8 @@ Attack4province = 0
 
 #Start of the code.
 
-def combatStrength(Terrain_BW,Division_width):
+def combatStrength(Terrain_BW,Division_width,ProvinceAttack):
+    OverstackMaxDiv = 8 + 4*(ProvinceAttack-1)
     BW = Terrain_BW
     DW = Division_width
     TW = math.ceil(BW / DW) * DW
@@ -35,7 +36,8 @@ def combatStrength(Terrain_BW,Division_width):
         CW_penalty = max(1.5 * (TW - BW) / BW, 0)
 
     CW_penalty_modifier = 1 - CW_penalty
-    Total_Attack = TW * CW_penalty_modifier
+    Stacking_penalty_modifier = 1 - 0.02* max((TW/DW)-OverstackMaxDiv,0)
+    Total_Attack = TW * CW_penalty_modifier*Stacking_penalty_modifier
     AttackValue = Total_Attack / BW
     return AttackValue
 
@@ -79,6 +81,7 @@ BWPlains = np.array([90,90+45,90+2*45,90+3*45])
 BWUrban = np.array([96,96+32,96+2*32,96+3*32])
 
 BattleWidths = np.concatenate(([BWDesert,BWForest,BWHills,BWJungle,BWMarsh,BWMountain,BWPlains,BWUrban]), axis=0)
+Attacksides = np.tile([1,2,3,4],8) #Array that shows from how many sides one attacks.
 AttackTerrain = np.zeros((BattleWidths.size,max_divisions))
 Division_size = np.arange(1,max_divisions)
 
@@ -86,7 +89,8 @@ for k in range(0,BattleWidths.size,1):
     Terrain_BW = BattleWidths[k]
     for l in range(0,Division_size.size,1):
         Division_width = Division_size[l]
-        AttackTerrain[k,l] = combatStrength(Terrain_BW,Division_width)
+        ProvinceAttack = Attacksides[k]
+        AttackTerrain[k,l] = combatStrength(Terrain_BW,Division_width,ProvinceAttack)
 
 #WeightedAverages = np.matmul(AttackTerrain,TerrainNormalized)
 
