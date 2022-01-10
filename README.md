@@ -6,3 +6,6 @@ Important features of this simulator:
 - Instead of plotting  (combat width penalty) on the y-axis, 
 - (used combat width)*(combat width penalty) is plotted on the y-axis.
 - This gives a more realistic view of your actual combat power.
+
+Version 2.0
+- Now includes the overstack penalty, which discourages the use of very small divisions.
