@@ -7,13 +7,13 @@ import matplotlib.pyplot as plt
 #Forests, 250 Plains.
 
 Desert = 0
-Forest = 25
+Forest = 1
 Hills = 0
 Jungle = 0
-Marsh = 11
+Marsh = 0
 Mountain = 0
-Plains = 17
-Urban = 3
+Plains = 1
+Urban = 0
 
 #Next, enter the weights determining how often you attack from 1,2,3 or 4
 #sides. Example: 1,2,1,0.
@@ -140,7 +140,7 @@ ax.grid(which="minor",alpha=0.3)
 props = dict(boxstyle='round', facecolor='white', alpha=1)
 
 # place a text box in upper left in axes coords
-ax.text(0.05, 0.4, textstr, transform=ax.transAxes, fontsize=10,
+ax.text(0.15, 0.4, textstr, transform=ax.transAxes, fontsize=10,
         verticalalignment='top', bbox=props)
 
 plt.show()
