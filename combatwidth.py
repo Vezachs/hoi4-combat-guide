@@ -1,3 +1,8 @@
+# HOW TO USE:
+# 1: Copy-paste this code into any compiler such as 
+# https://www.codabrainy.com/en/python-compiler/
+# 2: Change the number of provinces to whatever you like.
+# 3: Run the code.
 
 import numpy as np
 import math as math
