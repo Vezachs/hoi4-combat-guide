@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Aug  2 12:32:58 2023
+
+@author: Thijs Buckers
+"""
+
 # HOW TO USE:
 # 1: Copy-paste this code into any compiler such as 
 # https://www.codabrainy.com/en/python-compiler/
@@ -85,7 +92,7 @@ BWPlains = np.array([70 + 35 * i for i in range(4)])
 BWDesert = np.array([70 + 35 * i for i in range(4)])
 BWUrban = np.array([80 + 40 * i for i in range(4)])
 
-max_cw = 75
+max_cw = 50
 
 
 BattleWidths = np.concatenate(([BWDesert,BWForest,BWHills,BWJungle,BWMarsh,BWMountain,BWPlains,BWUrban]), axis=0)
@@ -126,30 +133,34 @@ textstr = '\n'.join((
 'Plains: '+str(round(PlainsRatio))+'%',
 'Urban: '+str(round(UrbanRatio))+'%' ))
 
-plt.plot(x,y)
+# Create the plot
+plt.figure(dpi=300)  # Set the DPI to 300 (adjust the value as needed)
+
+# Plot the data
+plt.plot(x, y)
+
+# Set major and minor ticks for y-axis
+plt.yticks(np.arange(0.5, 1.06, 0.1))  # Major ticks every 0.1 from 0.5 to 1.0
+plt.gca().yaxis.set_minor_locator(plt.MultipleLocator(0.01))  # Minor ticks every 0.01
+
+# Set major and minor ticks for x-axis
+plt.xticks(np.arange(0, max_cw + 1, 5))  # Major ticks every 5 from 0 to max_cw
+plt.gca().xaxis.set_minor_locator(plt.MultipleLocator(1))  # Minor ticks every 1
+
+# Add labels and title
 plt.title('Combat Width simulator by /u/Vezachs')
 plt.xlabel('Division Width')
 plt.ylabel('Combat Strength')
 plt.xlim(0, max_cw)
-plt.ylim(0.5, 1.05)
+plt.ylim(0.8, 1.05)
 
-major_ticks_x=np.arange(0,75,5)
-minor_ticks_x=np.arange(0,75,1)
-major_ticks_y=np.arange(0.5,1.1,0.1)
-minor_ticks_y=np.arange(0.5,1.1,0.02)
+# Show the grid and minor ticks
+plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+plt.minorticks_on()
 
-ax.set_xticks(major_ticks_x)
-ax.set_yticks(major_ticks_y)
-ax.set_xticks(minor_ticks_x,minor=True)
-ax.set_yticks(minor_ticks_y,minor=True)
-ax.grid(which="major",alpha=0.6)
-ax.grid(which="minor",alpha=0.3)
 
-# these are matplotlib.patch.Patch properties
-props = dict(boxstyle='round', facecolor='white', alpha=1)
+plt.text(0.95 * max_cw, 1.04, textstr, fontsize=10, ha='right', va='top',
+             bbox=dict(boxstyle='round', facecolor='white', edgecolor='black', alpha=0.8))
 
-# place a text box in upper left in axes coords
-ax.text(0.15, 0.4, textstr, transform=ax.transAxes, fontsize=10,
-        verticalalignment='top', bbox=props)
 
 plt.show()
