@@ -11,14 +11,14 @@ import matplotlib.pyplot as plt
 #Enter the number of provinces for each type you want to simulate, e.g. 500
 #Forests, 250 Plains.
 
-Desert = 0
+Desert = 1
 Forest = 1
-Hills = 0
-Jungle = 0
-Marsh = 0
-Mountain = 0
+Hills = 1
+Jungle = 1
+Marsh = 1
+Mountain = 1
 Plains = 1
-Urban = 0
+Urban = 1
 
 #Next, enter the weights determining how often you attack from 1,2,3 or 4
 #sides. Example: 1,2,1,0.
@@ -74,21 +74,24 @@ TerrainVec = np.concatenate((DesertVec,ForestVec,HillsVec,JungleVec,MarshVec,Mou
 TotalProvinces = np.sum(TerrainVec)
 TerrainNormalized = TerrainVec/TotalProvinces
 
-max_divisions = 75 #The Maximum Division size is 5x5x3=75.
-#Combat widths for all terrain types.
-BWDesert = np.array([90,90+45,90+2*45,90+3*45])
-BWForest = np.array([84,84+42,84+2*42,84+3*42])
-BWHills = np.array([80,80+40,80+2*40,80+3*40])
-BWJungle = np.array([84,84+42,84+2*42,84+3*42])
-BWMarsh = np.array([78,78+26,78+2*26,78+3*26])
-BWMountain = np.array([75,75+25,75+2*25,75+3*25])
-BWPlains = np.array([90,90+45,90+2*45,90+3*45])
-BWUrban = np.array([96,96+32,96+2*32,96+3*32])
+#The base and reinforce combat widths.
+
+BWForest = np.array([60 + 30 * i for i in range(4)])
+BWHills = np.array([70 + 35 * i for i in range(4)])
+BWJungle = np.array([60 + 30 * i for i in range(4)])
+BWMarsh = np.array([50 + 25 * i for i in range(4)])
+BWMountain = np.array([50 + 25 * i for i in range(4)])
+BWPlains = np.array([70 + 35 * i for i in range(4)])
+BWDesert = np.array([70 + 35 * i for i in range(4)])
+BWUrban = np.array([80 + 40 * i for i in range(4)])
+
+max_cw = 75
+
 
 BattleWidths = np.concatenate(([BWDesert,BWForest,BWHills,BWJungle,BWMarsh,BWMountain,BWPlains,BWUrban]), axis=0)
 Attacksides = np.tile([1,2,3,4],8) #Array that shows from how many sides one attacks.
-AttackTerrain = np.zeros((BattleWidths.size,max_divisions))
-Division_size = np.arange(1,max_divisions)
+AttackTerrain = np.zeros((BattleWidths.size,max_cw))
+Division_size = np.arange(1,max_cw)
 
 for k in range(0,BattleWidths.size,1):
     Terrain_BW = BattleWidths[k]
@@ -99,7 +102,8 @@ for k in range(0,BattleWidths.size,1):
 
 #WeightedAverages = np.matmul(AttackTerrain,TerrainNormalized)
 
-WeightedAverage = np.zeros((BattleWidths.size,max_divisions))
+
+WeightedAverage = np.zeros((BattleWidths.size,max_cw))
 for k in range(0,len(TerrainNormalized),1):
     WeightedAverage[k,:] = AttackTerrain[k,:]*TerrainNormalized[k]
 FinalAttack = np.sum(WeightedAverage, axis =0)
@@ -109,8 +113,8 @@ FinalAttack = np.sum(WeightedAverage, axis =0)
 np.random.seed(19680801)
 
 fig, ax = plt.subplots()
-x = np.arange(max_divisions-1) + 1
-y = np.delete(FinalAttack,max_divisions-1)
+x = np.arange(max_cw-1) + 1
+y = np.delete(FinalAttack,max_cw-1)
 
 textstr = '\n'.join((
 'Desert: '+str(round(DesertRatio))+'%',
@@ -126,7 +130,7 @@ plt.plot(x,y)
 plt.title('Combat Width simulator by /u/Vezachs')
 plt.xlabel('Division Width')
 plt.ylabel('Combat Strength')
-plt.xlim(0, max_divisions)
+plt.xlim(0, max_cw)
 plt.ylim(0.5, 1.05)
 
 major_ticks_x=np.arange(0,75,5)
