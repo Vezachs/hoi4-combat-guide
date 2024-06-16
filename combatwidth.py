@@ -2,7 +2,6 @@
 """
 Created on Wed Aug  2 12:32:58 2023
 
-@author: Thijs Buckers
 """
 
 # HOW TO USE:
